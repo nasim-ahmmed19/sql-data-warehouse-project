@@ -3,6 +3,7 @@
 Welcome to the **Data Warehouse and Analytics Project** repository!This repository contains a modern data warehouse implementation using SQL Server. The project follows the Medallion Architecture to process raw data into actionable insights through structured ETL pipelines.
 
 ---
+![Uploading dataarchitecture.drawio.png…]()
 
 ## 🏗️ Data Architecture: Medallion Framework
 This project implements the **Medallion Architecture**, organizing data into three logical layers to ensure quality and reliability:
