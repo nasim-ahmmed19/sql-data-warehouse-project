@@ -5,7 +5,7 @@ Welcome to the **Data Warehouse and Analytics Project** repository!This reposito
 ---
 
 ## 🏗️ Data Architecture: Medallion Framework
-[High Level Architecture](docs/dataarchitecture.drawio.png)
+![High Level Architecture](docs/dataarchitecture.drawio.png)
 
 This project implements the **Medallion Architecture**, organizing data into three logical layers to ensure quality and reliability:
 
