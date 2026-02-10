@@ -1,6 +1,6 @@
 # 🚀 Data Warehouse and Analytics Project
 
-Welcome to the **Data Warehouse and Analytics Project** repository! This project showcases a complete end-to-end data warehousing solution, following industry best practices in data engineering and analytics.
+Welcome to the **Data Warehouse and Analytics Project** repository!This repository contains a modern data warehouse implementation using SQL Server. The project follows the Medallion Architecture to process raw data into actionable insights through structured ETL pipelines.
 
 ---
 
