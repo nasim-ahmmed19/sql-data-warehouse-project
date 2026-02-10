@@ -17,7 +17,7 @@ Usage Example:
 ===============================================================================
 */
 
-ALTER   procedure [bronze].[load_bronze2] as
+Create or ALTER   procedure bronze.load_bronze as
 begin
 	set nocount on;
 	begin try
