@@ -1,0 +1,147 @@
+/*
+===============================================================================
+Stored Procedure: Load Bronze Layer (Source -> Bronze)
+===============================================================================
+Script Purpose:
+    This stored procedure loads data into the 'bronze' schema from external CSV files. 
+    It performs the following actions:
+    - Truncates the bronze tables before loading data.
+    - Uses the `BULK INSERT` command to load data from csv Files to bronze tables.
+
+Parameters:
+    None. 
+	  This stored procedure does not accept any parameters or return any values.
+
+Usage Example:
+    EXEC bronze.load_bronze;
+===============================================================================
+*/
+
+ALTER   procedure [bronze].[load_bronze2] as
+begin
+	set nocount on;
+	begin try
+		declare @rows as int, @start_time datetime,@end_time datetime,@batch_start_time datetime,@batch_end_time datetime
+		SET @batch_start_time=GETDATE()
+		print '____________________ ***** ____________________'
+		print '              Loading All dataset'
+		print '____________________ ***** ____________________'
+		print '***** Loading CRM dataset....*****'
+		print' '
+		print '*** CRM CUSTOMERS INFORMATION TABLE ***'
+		set @start_time=GETDATE();
+		print 'Truncat Table crm_cust_info'
+		print 'Loading crm_cust_info...'
+			truncate table bronze.crm_cust_info;
+			bulk insert bronze.crm_cust_info from 'D:\barra analysis\sql-data-warehouse-project\datasets\source_crm\cust_info.csv'
+			with(
+				firstrow=2,
+				fieldterminator=',',
+				tablock
+				);
+		set @rows=@@ROWCOUNT;
+		set @end_time=GETDATE();
+		print 'crm_cust_info : ' +cast(@rows as nvarchar)+' rows loaded in :'+ cast(datediff(MILLISECOND,@start_time,@end_time) as nvarchar)+' milesecond';
+	    PRINT '----------------------------------------------'
+
+		print' '
+		print '*** CRM PRODUCT INFORMATION TABLE ***'
+		set @start_time=GETDATE();
+		print 'Truncat Table crm_prd_info'
+		print 'Loading crm_prd_info...'
+			truncate table bronze.crm_prd_info;
+			bulk insert bronze.crm_prd_info from 'D:\barra analysis\sql-data-warehouse-project\datasets\source_crm\prd_info.csv'
+			with(
+				firstrow=2,
+				fieldterminator=',',
+				tablock
+				);
+		set @rows=@@ROWCOUNT;
+		set @end_time=GETDATE();
+		print 'crm_prd_info : ' +cast(@rows as nvarchar)+' rows loaded in :'+ cast(datediff(MILLISECOND,@start_time,@end_time) as nvarchar)+' milesecond';
+	    PRINT '----------------------------------------------'
+
+		print' '
+		print '*** CRM SALES DETAILS TABLE ***'
+		set @start_time=GETDATE();
+		print 'Truncat Table crm_sales_details'
+		print 'Loading crm_sales_details...'
+			truncate table bronze.crm_sales_details;
+			bulk insert bronze.crm_sales_details from 'D:\barra analysis\sql-data-warehouse-project\datasets\source_crm\sales_details.csv'
+			with(
+				firstrow=2,
+				fieldterminator=',',
+				tablock
+				);
+		set @rows=@@ROWCOUNT;
+		set @end_time=GETDATE();
+		print 'crm_sales_details : ' +cast(@rows as nvarchar)+' rows loaded in :'+ cast(datediff(MILLISECOND,@start_time,@end_time) as nvarchar)+' milesecond';
+	    PRINT '----------------------------------------------'
+
+		PRINT ''
+		print '***** Loading ERP dataset....*****'
+		PRINT ''
+		
+		print '*** ERP CUSTOMERS INFORMATION TABLE ***'
+		set @start_time=GETDATE();
+		print 'Truncat Table erp_cust_az12'
+		print 'Loading erp_cust_az12...'
+		    truncate table bronze.erp_cust_az12;
+			bulk insert bronze.erp_cust_az12 from 'D:\barra analysis\sql-data-warehouse-project\datasets\source_erp\cust_az12.csv'
+			with(
+				firstrow=2,
+				fieldterminator=',',
+				tablock
+				);
+		set @rows=@@ROWCOUNT;
+		set @end_time=GETDATE();
+		print 'erp_cust_az12 : ' +cast(@rows as nvarchar)+' rows loaded in :'+ cast(datediff(MILLISECOND,@start_time,@end_time) as nvarchar)+' milesecond';
+	    PRINT '----------------------------------------------'
+
+		print' '
+		print '*** ERP LOCATION TABLE ***'
+		set @start_time=GETDATE();
+		print 'Truncat Table erp_loc_a101'
+		print 'Loading erp_loc_a101...'
+			truncate table bronze.erp_loc_a101;
+			bulk insert bronze.erp_loc_a101 from 'D:\barra analysis\sql-data-warehouse-project\datasets\source_erp\loc_a101.csv'
+			with(
+				firstrow=2,
+				fieldterminator=',',
+				tablock
+				);
+		set @rows=@@ROWCOUNT;
+		set @end_time=GETDATE();
+		print 'erp_loc_a101 : ' +cast(@rows as nvarchar)+' rows loaded in :'+ cast(datediff(MILLISECOND,@start_time,@end_time) as nvarchar)+' milesecond';
+	    PRINT '----------------------------------------------'
+
+		print' '
+		print '*** ERP PRODUCT CATEGORY TABLE ***'
+		set @start_time=GETDATE();
+		print 'Truncat Table erp_px_cat_g1v2'
+		print 'Loading cerp_px_cat_g1v2...'
+			truncate table bronze.erp_px_cat_g1v2;
+			bulk insert bronze.erp_px_cat_g1v2 from 'D:\barra analysis\sql-data-warehouse-project\datasets\source_erp\px_cat_g1v2.csv'
+			with(
+				firstrow=2,
+				fieldterminator=',',
+				tablock
+				);
+		set @rows=@@ROWCOUNT;
+		set @end_time=GETDATE();
+		print 'erp_px_cat_g1v2 : ' +cast(@rows as nvarchar)+' rows loaded in :'+ cast(datediff(MILLISECOND,@start_time,@end_time) as nvarchar)+' milesecond';
+	    SET @batch_end_time=GETDATE()
+		PRINT '________________________ ***** ________________________'
+		PRINT 'Loading Bronze Layer is Completed'
+		PRINT 'Total Load Duration: '+ cast(datediff(millisecond,@batch_start_time,@batch_end_time) as nvarchar)+' millisecond'
+		PRINT '________________________ ***** ________________________'
+	end try
+	begin catch
+			print '------------------ Error ------------------'
+			print 'Error Occured During Loading Bronze Layer.'
+			print 'ERROR Message: ' + error_message();
+			print 'Error Number: ' + cast(error_number() as nvarchar);
+			print 'Error State: ' + cast(error_state() as nvarchar);
+			print '------------------ ***** ------------------'
+	end catch
+end ;
