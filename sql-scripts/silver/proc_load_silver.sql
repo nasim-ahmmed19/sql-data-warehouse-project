@@ -90,7 +90,7 @@ begin
 			(select 
 				prd_id,
 				replace(LEFT(prd_key,5),'-','_') as cat_id,
-				prd_key,
+				SUBSTRING(prd_key,7,len(prd_key)) as prd_key,
 				prd_nm,
 				isnull(prd_cost,0) as prd_cost,
 				case
