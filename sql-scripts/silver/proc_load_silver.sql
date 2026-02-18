@@ -17,7 +17,7 @@ Usage Example:
 ===============================================================================
 */﻿
 
-CREATE OR ALTER   procedure silver.load_silver as 
+create or ALTER     procedure silver.load_silver as 
 begin
 	set nocount on;
 	declare @row int,@start_time datetime,@end_time datetime,@batch_start_time datetime,@batch_end_time datetime;
@@ -223,7 +223,7 @@ begin
 				case
 					when trim(cntry)='DE' then 'Germany'
 					when trim(cntry) in ('US','USA') THEN 'United States'
-					when trim(cntry)='' or trim(cntry)=NULL then 'n/a'
+					when trim(cntry)='' or trim(cntry) is NULL then 'n/a'
 					else trim(cntry)
 				end as cntry  --Normalize and Handle missing or blank country codes
 			from bronze.erp_loc_a101 ;
